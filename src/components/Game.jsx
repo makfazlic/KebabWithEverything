@@ -37,7 +37,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase();
 
-function setData(user, answers, time) {
+function setData(user, answers, time, feedback) {
   // Get a key for a new Post.
   const newPostKey = push(child(ref(db), 'posts')).key;
 
@@ -45,6 +45,7 @@ function setData(user, answers, time) {
     user: user,
     answers: answers,
     time: time,
+    feedback: feedback,
   };
 
   const updates = {
@@ -319,6 +320,8 @@ export default function Game() {
     "time15": [],
     "time16": [],
   })
+
+  const [feedback, setFeedback] = useState("")
 
   const [startTime, setStartTime] = useState(0);
   const [page, setPage] = useState(0)
@@ -1705,7 +1708,6 @@ export default function Game() {
                       if (isRightAnswer(page - 1, 1)) {
                         setTimeout(() => {
                           setShowPossibleAnswers(false)
-                          setData(user, answer, time)
 
                           setPage(page + 1)
                         }, 50);
@@ -1720,7 +1722,6 @@ export default function Game() {
                       if (isRightAnswer(page - 1, 2)) {
                         setTimeout(() => {
                           setShowPossibleAnswers(false)
-                          setData(user, answer, time)
 
                           setPage(page + 1)
                         }, 50);
@@ -1735,7 +1736,6 @@ export default function Game() {
                       if (isRightAnswer(page - 1, 3)) {
                         setTimeout(() => {
                           setShowPossibleAnswers(false)
-                          setData(user, answer, time)
 
                           setPage(page + 1)
                         }, 50);
@@ -1750,8 +1750,6 @@ export default function Game() {
                       if (isRightAnswer(page - 1, 4)) {
                         setTimeout(() => {
                           setShowPossibleAnswers(false)
-                          setData(user, answer, time)
-
                           setPage(page + 1)
                         }
                           , 50);
@@ -1767,7 +1765,23 @@ export default function Game() {
           </div>
         </div>
       }
-      {page === 17 && 
+      {page === 17 &&
+        <div className='flex h-5/6 flex-col justify-between items-center xl:w-1/3 md:w-1/2 mx-auto px-10'>
+          <div className='flex flex-col justify-center h-full items-center mb-32 w-full'>
+            <h1 className='text-2xl'>Please leave feedback</h1>
+            <textarea className='w-full h-80 mt-10 px-5 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-500' onChange={(e) => setFeedback(e.target.value)}></textarea>
+            <button className='bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-md p-2 mt-10 px-10'
+              onClick={
+                () => {
+                  setData(user, answer, time, feedback)
+                  setPage(page + 1)
+                }
+              }
+            >Submit</button>
+          </div>
+        </div>
+      }
+      {page === 18 && 
         <div className='flex h-5/6 flex-col justify-center items-center xl:w-1/3 md:w-1/2 mx-auto px-10'>
           <h1 className='mb-5 text-3xl font-bold'>Thank you for participating!</h1>
           <p className='mb-32 text-2xl'>💌 From Harkeerat and Mak 💌</p>
