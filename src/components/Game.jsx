@@ -220,7 +220,7 @@ export default function Game() {
       case: 'camelcase',
       numberOfWords: 4,
       correctAnswer: 'closeButNoCigar',
-      question: 'clouse but no cigar',
+      question: 'close but no cigar',
       answer1: 'closeBytNoCigar',
       answer2: 'closeButNoCigar',
       answer3: 'closeBulNoCigar',
@@ -324,16 +324,33 @@ export default function Game() {
   const [feedback, setFeedback] = useState("")
 
   const [startTime, setStartTime] = useState(0);
-  const [page, setPage] = useState(0)
+  const [page, setPage] = useState(-1)
   return (
     <div className='w-full h-screen pt-10'>
       <img src={logo} alt='logo' className='mx-auto  h-20' />
+      {page === -1 &&
+        <div className='flex flex-col items-center xl:w-1/3 lg:w-1/2 md:w-1/2 mx-auto px-10'>
+          <h1 className='text-2xl font-bold mt-16'>Welcome to our case survey!</h1>
+          <p className='text-xl mt-5'>This survey will take about 6 minutes.</p>
+          <p className='text-lg font-bold mt-20'>How it works?</p>
+          <div>
+          <p className='text-lg mt-5'>1. You will be asked to remember a presented sentance.</p>
+          <p className='text-lg mt-5'>2. Once you memorized it, click "ready?".</p>
+          <p className='text-lg mt-5'>3. You will be presented with 4 options, one of them is the correct answer you memorized previously.</p>
+          <p className='text-lg mt-5'>4. Select the correct answer and you will be directed to the next question.</p>
+          <p className='text-lg mt-5'>5. Once you finish the survey, you will be able to leave feedback.</p>
+          </div>
+          <p className='text-lg font-bold mt-20'>Ready to start?</p>
+          <button className='bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-md p-2 mt-10 w-full' onClick={() => setPage(0)}>Start</button>
+        </div>
+
+      }
 
       {
         // User information page
         page === 0 &&
         <div className='flex flex-col items-center xl:w-1/3 lg:w-1/3 md:w-1/2 mx-auto px-10'>
-          <h1 className='text-2xl font-bold mt-16'>Welcome to case survey!</h1>
+          <h1 className='text-2xl font-bold mt-16'>Let's get to know you!</h1>
           <p className='text-sm mt-5'>Please fill out the form below to start the game.</p>
           <div className='flex flex-col mt-10 w-full'>
             <label className='text-sm'>Name</label>
